@@ -1,4 +1,4 @@
-#' Title
+#' Matching-based (on deltahat) concordance for benefit
 #'
 #' This function derives the c-for-benefit based on 1:1 control:treated matches,
 #' with matching based on predicted individualized treatment effect. The main
@@ -16,7 +16,7 @@
 #' replications of this procedure.
 #' @param get.all get the c-for-ben for all resamplings.
 #'
-#' @return The concordance estimate(s)
+#' @return The concordance estimate(s) for predicted ITE
 #' @export
 #'
 #' @examples

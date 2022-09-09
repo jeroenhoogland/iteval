@@ -1,4 +1,4 @@
-#' Title
+#' Matching-based (on y0hat) concordance for benefit
 #'
 #' @param y0hat Predicted outcome under control treatment.
 #' @param y1hat Predicted outcome under treatment.
@@ -15,7 +15,7 @@
 #' replications of this procedure.
 #' @param get.all get the c-for-ben for all resamplings.
 #'
-#' @return The concordance estimate(s)
+#' @return The concordance estimate(s) for predicted ITE
 #' @export
 #'
 #' @examples

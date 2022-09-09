@@ -2,7 +2,7 @@
 % Please edit documentation in R/cbeny0.R
 \name{cbeny0}
 \alias{cbeny0}
-\title{Title}
+\title{Matching-based (on y0hat) concordance for benefit}
 \usage{
 cbeny0(
   y0hat,
@@ -39,10 +39,10 @@ replications of this procedure.}
 \item{get.all}{get the c-for-ben for all resamplings.}
 }
 \value{
-The concordance estimate(s)
+The concordance estimate(s) for predicted ITE
 }
 \description{
-Title
+Matching-based (on y0hat) concordance for benefit
 }
 \examples{
 # generate some  data

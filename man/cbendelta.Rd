@@ -2,7 +2,7 @@
 % Please edit documentation in R/cbendelta.R
 \name{cbendelta}
 \alias{cbendelta}
-\title{Title}
+\title{Matching-based (on deltahat) concordance for benefit}
 \usage{
 cbendelta(deltahat, y, ind.A, ind.B, nresample = 1, get.all = FALSE)
 }
@@ -25,7 +25,7 @@ replications of this procedure.}
 \item{get.all}{get the c-for-ben for all resamplings.}
 }
 \value{
-The concordance estimate(s)
+The concordance estimate(s) for predicted ITE
 }
 \description{
 This function derives the c-for-benefit based on 1:1 control:treated matches,
