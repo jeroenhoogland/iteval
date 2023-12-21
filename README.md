@@ -1,5 +1,5 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd -->
 
 # iteval
 
@@ -8,7 +8,7 @@
 
 The goal of iteval is to ease implementation of the discrimination and
 calibration measures for predicted individualized treatment effect as
-described by Hoogland et al. 2022 \[yet to insert DOI\].
+described by Hoogland et al. \[yet to insert DOI\].
 
 ## Installation
 
@@ -37,7 +37,7 @@ basic logistic regression model.
 ``` r
 # generate some  data
 set.seed(123) # for replicability
-n <- 250
+n <- 500
 x <- rnorm(n) # covariate
 trt <- rbinom(n, 1, .5) # treatment
 beta <- c(0, 1, 1, -.75) # coefficients
@@ -56,14 +56,18 @@ treated condition (`y1hat`) and predicted ite’s (`deltahat`).
 control.data <- cbind(1, x, 0, 0) 
 treated.data <- cbind(1, x, 1, x)
 
-# under the control condition
+# prediction under the control condition
 y0hat <- plogis(control.data %*% coef(mod))
 
-# under the treated condition
+# prediction under the treated condition
 y1hat <- plogis(treated.data %*% coef(mod))
 
 # and their difference
 deltahat <- y1hat - y0hat
+
+# true outcome probabilities given data generating mechanism
+p0 <- plogis(control.data %*% c(0, 1, 1, -.75))
+p1 <- plogis(treated.data %*% c(0, 1, 1, -.75))
 ```
 
 Subsequently, we apply the performance measures in the simulated data.
@@ -88,7 +92,7 @@ All is in place now. The treatment assignments are as follows:
 table(trt)
 #> trt
 #>   0   1 
-#> 116 134
+#> 251 249
 ```
 
 Hence, 1:1 matching excluded some individuals and repeated subsampling
@@ -98,7 +102,7 @@ of the larger group is used more of the data (`nresample=100`).
 # cbendelta
 res <- cbendelta(deltahat, y, ind.A, ind.B, nresample = 250, get.all=TRUE)
 mean(res) # cbendelta
-#> [1] 0.6470594
+#> [1] 0.6359874
 hist(res, xlab="cbendelta", main=""); abline(v=mean(res), col="red")
 ```
 
@@ -109,7 +113,7 @@ hist(res, xlab="cbendelta", main=""); abline(v=mean(res), col="red")
 # cbeny0
 res <- cbeny0(y0hat, y1hat, y, ind.A, ind.B, "y0hat", nresample = 250, get.all=TRUE)
 mean(res) # cbendelta
-#> [1] 0.6463172
+#> [1] 0.6424884
 hist(res, xlab="cbeny0", main=""); abline(v=mean(res), col="red")
 ```
 
@@ -119,27 +123,29 @@ hist(res, xlab="cbeny0", main=""); abline(v=mean(res), col="red")
 
 # mbcb (does not depend on matching)
 mbcb(y0hat, y1hat)
-#> [1] 0.660821
+#> [1] 0.6318088
+
+# 'true' mbcb for this model (possible since sim setting)
+mbcb(y0hat, y1hat, y0hat.updated = p0, y1hat.updated = p1)
+#> [1] 0.6266713
 ```
 
 ### Calibration performance
 
 ``` r
-cal(y0hat, y1hat, y, ind.B)
+# Example 'true' calibration (possible since sim setting)
+# otherwise, cal() takes estimates p0 and p1 based on 
+# independent data.
+(cal <- cal(y0hat,y1hat,y,trt,p0,p1,type="both"))
 #> 
-#> Call:  stats::glm(formula = y[ind.B] ~ I(stats::qlogis(y1hat[ind.B]) - 
-#>     stats::qlogis(y0hat[ind.B])), family = "quasibinomial", offset = stats::qlogis(y0hat[ind.B]))
+#> Call:  stats::glm(formula = p01 ~ 0 + Z + deltahatlpstar, family = "quasibinomial", 
+#>     offset = os)
 #> 
 #> Coefficients:
-#>                                                  (Intercept)  
-#>                                                   -1.821e-16  
-#> I(stats::qlogis(y1hat[ind.B]) - stats::qlogis(y0hat[ind.B]))  
-#>                                                    1.000e+00  
+#>              Z  deltahatlpstar  
+#>        0.09199         0.90527  
 #> 
-#> Degrees of Freedom: 133 Total (i.e. Null);  132 Residual
-#> Null Deviance:       162.8 
-#> Residual Deviance: 144.8     AIC: NA
+#> Degrees of Freedom: 500 Total (i.e. Null);  498 Residual
+#> Null Deviance:       166.4 
+#> Residual Deviance: 1.083e-14     AIC: NA
 ```
-
-As expected calibration in the development data returns a 0 intercept
-and slope 1.

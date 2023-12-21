@@ -4,7 +4,7 @@
 \alias{cal}
 \title{Calibration model for predicted ITEs}
 \usage{
-cal(y0hat, y1hat, y, ind.B = NULL)
+cal(y0hat, y1hat, y, trt, p0 = NULL, p1 = NULL, type = "both")
 }
 \arguments{
 \item{y0hat}{Predicted outcome under control treatment.}
@@ -13,8 +13,19 @@ cal(y0hat, y1hat, y, ind.B = NULL)
 
 \item{y}{Observed outcome of interest.}
 
-\item{ind.B}{Index for individuals in the treated group (should be a vector
-of length y with the indices that belong to treated individuals).}
+\item{trt}{Vector with treatment allocations (1 for treated, 0 for control).}
+
+\item{p0}{Estimate of the potential outcome under the control condition based on independent
+data (or known truth in a simulation setting).}
+
+\item{p1}{Estimate of the potential outcome under the treated condition based on independent
+data (or known truth in a simulation setting).}
+
+\item{type}{Default type="both", indicating that the ITE predictions are evaluated in the
+control arm based on an offset (the estimated outcome under the treated condition)
+estimated in the treated group and given as p1, and in the treated arm based on an offset
+(the estimated outcome under the control condition) as estimated in the control group and
+given as p0. Types "control" and "treated" only evaluate in this names arm.}
 }
 \value{
 Calibration model for predicted ITEs
@@ -26,7 +37,8 @@ that are evaluated should be for those that were treated (ind.B).
 }
 \examples{
 # generate some  data
-n <- 250
+set.seed(123)
+n <- 500
 x <- rnorm(n) # covariate
 trt <- rbinom(n, 1, .5) # treatment
 beta <- c(0, 1, 1, -.75) # coefficients
@@ -42,6 +54,9 @@ treated.data <- cbind(1, x, 1, x)
 y0hat <- plogis(control.data \%*\% coef(mod))
 y1hat <- plogis(treated.data \%*\% coef(mod))
 
-ind.B <- which(trt == 1)
-cal(y0hat,y1hat,y,ind.B) # apparent
+# truth probabilities for current sim
+p0 <- plogis(control.data \%*\% c(0, 1, 1, -.75))
+p1 <- plogis(treated.data \%*\% c(0, 1, 1, -.75))
+
+cal(y0hat,y1hat,y,trt,p0,p1,type="both")
 }

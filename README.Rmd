@@ -4,7 +4,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 The goal of iteval is to ease implementation of the discrimination and 
 calibration measures for predicted individualized treatment effect as described
-by Hoogland et al. 2022 [yet to insert DOI].
+by Hoogland et al. [yet to insert DOI].
 
 ## Installation
 
@@ -49,7 +49,7 @@ and observed binary outcome `y` and fit a basic logistic regression model.
 ```{r example}
 # generate some  data
 set.seed(123) # for replicability
-n <- 250
+n <- 500
 x <- rnorm(n) # covariate
 trt <- rbinom(n, 1, .5) # treatment
 beta <- c(0, 1, 1, -.75) # coefficients
@@ -68,14 +68,18 @@ Next, we obtain predicted of y under control treatment (`y0hat`), treated condit
 control.data <- cbind(1, x, 0, 0) 
 treated.data <- cbind(1, x, 1, x)
 
-# under the control condition
+# prediction under the control condition
 y0hat <- plogis(control.data %*% coef(mod))
 
-# under the treated condition
+# prediction under the treated condition
 y1hat <- plogis(treated.data %*% coef(mod))
 
 # and their difference
 deltahat <- y1hat - y0hat
+
+# true outcome probabilities given data generating mechanism
+p0 <- plogis(control.data %*% c(0, 1, 1, -.75))
+p1 <- plogis(treated.data %*% c(0, 1, 1, -.75))
 ```
 
 Subsequently, we apply the performance measures in the simulated data. NB.: note that these
@@ -114,13 +118,18 @@ hist(res, xlab="cbeny0", main=""); abline(v=mean(res), col="red")
 
 # mbcb (does not depend on matching)
 mbcb(y0hat, y1hat)
+
+# 'true' mbcb for this model (possible since sim setting)
+mbcb(y0hat, y1hat, y0hat.updated = p0, y1hat.updated = p1)
 ```
 
 
 ### Calibration performance
 
 ```{r}
-cal(y0hat, y1hat, y, ind.B)
+# Example 'true' calibration (possible since sim setting)
+# otherwise, cal() takes estimates p0 and p1 based on 
+# independent data.
+(cal <- cal(y0hat,y1hat,y,trt,p0,p1,type="both"))
 ```
 
-As expected calibration in the development data returns a 0 intercept and slope 1.
