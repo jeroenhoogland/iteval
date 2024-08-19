@@ -103,10 +103,13 @@ of the larger group is used more of the data (`nresample=100`).
 res <- cbendelta(deltahat, y, ind.A, ind.B, nresample = 250, get.all=TRUE)
 mean(res) # cbendelta
 #> [1] 0.6359874
+```
+
+``` r
 hist(res, xlab="cbendelta", main=""); abline(v=mean(res), col="red")
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
 
 ``` r
 
@@ -114,16 +117,22 @@ hist(res, xlab="cbendelta", main=""); abline(v=mean(res), col="red")
 res <- cbeny0(y0hat, y1hat, y, ind.A, ind.B, "y0hat", nresample = 250, get.all=TRUE)
 mean(res) # cbendelta
 #> [1] 0.6424884
+```
+
+``` r
 hist(res, xlab="cbeny0", main=""); abline(v=mean(res), col="red")
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-2.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-2.png" width="100%" />
 
 ``` r
 
 # mbcb (does not depend on matching)
 mbcb(y0hat, y1hat)
 #> [1] 0.6318088
+```
+
+``` r
 
 # 'true' mbcb for this model (possible since sim setting)
 mbcb(y0hat, y1hat, y0hat.updated = p0, y1hat.updated = p1)
@@ -147,5 +156,5 @@ mbcb(y0hat, y1hat, y0hat.updated = p0, y1hat.updated = p1)
 #> 
 #> Degrees of Freedom: 500 Total (i.e. Null);  498 Residual
 #> Null Deviance:       166.4 
-#> Residual Deviance: 1.083e-14     AIC: NA
+#> Residual Deviance: 7.313e-15     AIC: NA
 ```

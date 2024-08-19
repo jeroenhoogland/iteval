@@ -11,8 +11,11 @@ Description: Measures of discrimination and calibration for predicted individual
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Imports: 
-    Hmisc
+    Hmisc,
+    Rcpp
 URL: https://github.com/jeroenhoogland/iteval
 BugReports: https://github.com/jeroenhoogland/iteval/issues
+LinkingTo: 
+    Rcpp
