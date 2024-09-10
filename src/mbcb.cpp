@@ -91,7 +91,7 @@ List mbcb_cpp(NumericVector p_0,
   // calculate standard error
   double sd = 0;
   sd = sumr2 * sumw * sumw - 2 * sumr * sumw * sumrw + sumw2 * sumr * sumr;
-  sd = 2 * sqrt(sd) / sumr / sumr;
+  sd = sqrt(sd) / sumr / sumr;
   // return list with c-for-benefit and its standard error
   return List::create(
     _["C Index"] = cindex,
