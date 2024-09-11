@@ -30,7 +30,7 @@ The concordance estimate(s) for predicted ITE
 \description{
 This function derives the c-for-benefit based on 1:1 control:treated matches,
 with matching based on predicted individualized treatment effect. The main
-reference is \url{DOI:10.1016/j.jclinepi.2017.10.021}.
+reference is \url{https://doi.org/10.1016/j.jclinepi.2017.10.021}.
 }
 \examples{
 # generate some  data

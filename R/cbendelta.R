@@ -2,7 +2,7 @@
 #'
 #' This function derives the c-for-benefit based on 1:1 control:treated matches,
 #' with matching based on predicted individualized treatment effect. The main
-#' reference is <DOI:10.1016/j.jclinepi.2017.10.021>.
+#' reference is <https://doi.org/10.1016/j.jclinepi.2017.10.021>.
 #'
 #' @param deltahat Predicted individualized treatment effects
 #' @param y Observed outcome of interest
