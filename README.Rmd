@@ -28,7 +28,7 @@ by Hoogland et al. [yet to insert DOI].
 
 You can install the development version of **iteval** from [GitHub](https://github.com/) with:
 
-``` r
+``` {r eval=F}
 # install.packages("devtools")
 devtools::install_github("jeroenhoogland/iteval")
 ```
