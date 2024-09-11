@@ -1,13 +1,13 @@
 Package: iteval
 Title: Individualized Treatment Effects Validation
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: 
     person(given = "Jeroen",
            family = "Hoogland",
            role = c("aut", "cre"),
            email = "j.hoogland-2@umcutrecht.nl",
            comment = c(ORCID = "0000-0002-2397-6052"))
-Description: Measures of discrimination and calibration for predicted individualized treatment effect.
+Description: Measures of discrimination and calibration for predicted individualized treatment effect. Further details are available in DOI: 10.1002/sim.10186. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

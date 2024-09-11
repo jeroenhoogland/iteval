@@ -8,7 +8,18 @@
 
 The goal of iteval is to ease implementation of the discrimination and
 calibration measures for predicted individualized treatment effect as
-described by Hoogland et al. \[yet to insert DOI\].
+described by Hoogland et al. DOI:
+[10.1002/sim.10186](https://doi.org/10.1002/sim.10186).
+
+#### Contributions
+
+Many thanks to [Kim Daniel Jakobsen](https://github.com/kjakobse) for
+writing a fast C++ implementation of mbcb that allows for sampling
+weights and provides asymptotic se’s (based on section 5 in Quade, D.
+(1971). Nonparametric partial correlation. Stichting Mathematisch
+Centrum. Mathematical Statistics. Stichting Mathematisch Centrum;
+implemented analogous to the cidxcn subroutine from the Hmisc R package
+(<https://github.com/harrelfe/Hmisc/blob/master/src/ratfor/cidxcn.r>).
 
 ## Installation
 
@@ -103,9 +114,6 @@ of the larger group is used more of the data (`nresample=100`).
 res <- cbendelta(deltahat, y, ind.A, ind.B, nresample = 250, get.all=TRUE)
 mean(res) # cbendelta
 #> [1] 0.6359874
-```
-
-``` r
 hist(res, xlab="cbendelta", main=""); abline(v=mean(res), col="red")
 ```
 
@@ -117,9 +125,6 @@ hist(res, xlab="cbendelta", main=""); abline(v=mean(res), col="red")
 res <- cbeny0(y0hat, y1hat, y, ind.A, ind.B, "y0hat", nresample = 250, get.all=TRUE)
 mean(res) # cbendelta
 #> [1] 0.6424884
-```
-
-``` r
 hist(res, xlab="cbeny0", main=""); abline(v=mean(res), col="red")
 ```
 
@@ -130,9 +135,6 @@ hist(res, xlab="cbeny0", main=""); abline(v=mean(res), col="red")
 # mbcb (does not depend on matching)
 mbcb(y0hat, y1hat)
 #> [1] 0.6318088
-```
-
-``` r
 
 # 'true' mbcb for this model (possible since sim setting)
 mbcb(y0hat, y1hat, y0hat.updated = p0, y1hat.updated = p1)
@@ -156,5 +158,5 @@ mbcb(y0hat, y1hat, y0hat.updated = p0, y1hat.updated = p1)
 #> 
 #> Degrees of Freedom: 500 Total (i.e. Null);  498 Residual
 #> Null Deviance:       166.4 
-#> Residual Deviance: 7.313e-15     AIC: NA
+#> Residual Deviance: 5.083e-15     AIC: NA
 ```

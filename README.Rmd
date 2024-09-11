@@ -20,9 +20,13 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of iteval is to ease implementation of the discrimination and 
-calibration measures for predicted individualized treatment effect as described
-by Hoogland et al. [yet to insert DOI].
+The goal of iteval is to ease implementation of the discrimination and
+calibration measures for predicted individualized treatment effect as
+described by Hoogland et al. DOI: [10.1002/sim.10186](https://doi.org/10.1002/sim.10186). 
+
+#### Contributions
+
+Many thanks to [Kim Daniel Jakobsen](https://github.com/kjakobse) for writing a fast C++ implementation of mbcb that allows for sampling weights and provides asymptotic se's (based on section 5 in Quade, D. (1971). Nonparametric partial correlation. Stichting Mathematisch Centrum. Mathematical Statistics. Stichting Mathematisch Centrum; implemented analogous to the cidxcn subroutine from the Hmisc R package (https://github.com/harrelfe/Hmisc/blob/master/src/ratfor/cidxcn.r).
 
 ## Installation
 
